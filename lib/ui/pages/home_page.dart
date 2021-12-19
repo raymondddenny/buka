@@ -31,7 +31,7 @@ class HomePage extends StatelessWidget {
                     await authProvider.signOut();
                     AutoRouter.of(context);
 
-                    context.navigateBack();
+                    context.replaceRoute(const LoginRoute());
                   },
                   icon: Icon(Icons.logout))
             ],

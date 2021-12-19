@@ -14,11 +14,11 @@ class ProfilePage extends StatelessWidget {
         future: authProvider.getUserDoc(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return const Text("Something went wrong");
+            return Center(child: const Text("Something went wrong"));
           }
 
           if (snapshot.hasData && !snapshot.data!.exists) {
-            return const Text("Document does not exist");
+            return Center(child: const Text("Document does not exist"));
           }
 
           if (snapshot.connectionState == ConnectionState.done) {
@@ -53,7 +53,7 @@ class ProfilePage extends StatelessWidget {
             );
           }
 
-          return const Text("loading");
+          return Center(child: const Text("loading"));
         });
   }
 }
