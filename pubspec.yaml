@@ -28,6 +28,8 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   auto_route: ^3.2.0
+  cached_network_image: ^3.2.0
+  cloud_firestore: ^3.1.5
   cupertino_icons: ^1.0.2
   firebase_auth: ^3.3.4
   flutter:
