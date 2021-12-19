@@ -6,11 +6,29 @@ import 'package:flutter/material.dart';
 
 class StockProvider extends ChangeNotifier with BaseController {
   List<StockSymbolModel> _stockSymbolList = [];
+  List<StockSymbolModel> _filteredList = [];
+
   bool _isLoading = false;
+  String _searchSymbol = '';
 
   bool get isLoading => _isLoading;
+  String get searchSymbol => _searchSymbol;
 
   List<StockSymbolModel> get stockSymbolList => _stockSymbolList;
+  List<StockSymbolModel> get filteredList => _filteredList;
+
+  void setSearchSymbol(String text) {
+    _searchSymbol = text.toLowerCase();
+    _filteredList = _stockSymbolList;
+
+    if (searchSymbol.isNotEmpty) {
+      _filteredList = filteredList.where((stock) => stock.displaySymbol.toLowerCase().contains(_searchSymbol)).toList();
+    } else {
+      _filteredList = stockSymbolList;
+    }
+
+    notifyListeners();
+  }
 
   Future<void> getStocksSymbol() async {
     _isLoading = true;
@@ -23,15 +41,17 @@ class StockProvider extends ChangeNotifier with BaseController {
       final response = stockSymbolModelFromJson(request);
 
       _stockSymbolList = response;
+      _filteredList = stockSymbolList;
+
       _isLoading = false;
       notifyListeners();
     } else {
       print('request is $request');
       _stockSymbolList = [];
+      _filteredList = stockSymbolList;
+
       _isLoading = false;
       notifyListeners();
     }
-
-    // print(response.toString());
   }
 }

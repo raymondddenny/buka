@@ -42,20 +42,64 @@ class _StockPageState extends State<StockPage> {
                   ),
                 ),
               )
-            : ListView.builder(
-                itemCount: stockProvider.stockSymbolList.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    leading: Text(stockProvider.stockSymbolList[index].displaySymbol),
-                    title: Text(stockProvider.stockSymbolList[index].description),
-                    subtitle: Text(stockProvider.stockSymbolList[index].type),
-                    trailing: IconButton(
-                        onPressed: () {
-                          watchStockProvider.addToWatchList(stockProvider.stockSymbolList[index]);
-                        },
-                        icon: const Icon(Icons.saved_search_rounded)),
-                  );
-                },
+            : Column(
+                children: [
+                  Container(
+                    height: 50,
+                    width: double.maxFinite,
+                    child: TextField(
+                      onChanged: (value) {
+                        stockProvider.setSearchSymbol(value);
+                      },
+                      decoration: const InputDecoration(
+                        labelText: 'Search stock symbol',
+                        suffixIcon: Icon(Icons.search),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Consumer<StockProvider>(
+                      builder: (context, stockProvider, _) => stockProvider.filteredList.isEmpty
+                          ? const Center(
+                              child: Text('Not found stocks'),
+                            )
+                          : ListView.builder(
+                              itemCount: stockProvider.filteredList.length,
+                              itemBuilder: (context, index) {
+                                if (stockProvider.searchSymbol.isEmpty) {
+                                  return ListTile(
+                                    leading: Text(stockProvider.filteredList[index].displaySymbol),
+                                    title: Text(stockProvider.filteredList[index].description),
+                                    subtitle: Text(stockProvider.filteredList[index].type),
+                                    trailing: IconButton(
+                                        onPressed: () {
+                                          watchStockProvider.addToWatchList(
+                                              stockData: stockProvider.filteredList[index],
+                                              index: index,
+                                              context: context);
+                                        },
+                                        icon: const Icon(Icons.saved_search_rounded)),
+                                  );
+                                } else {
+                                  return ListTile(
+                                    leading: Text(stockProvider.filteredList[index].displaySymbol),
+                                    title: Text(stockProvider.filteredList[index].description),
+                                    subtitle: Text(stockProvider.filteredList[index].type),
+                                    trailing: IconButton(
+                                        onPressed: () {
+                                          watchStockProvider.addToWatchList(
+                                              stockData: stockProvider.filteredList[index],
+                                              index: index,
+                                              context: context);
+                                        },
+                                        icon: const Icon(Icons.saved_search_rounded)),
+                                  );
+                                }
+                              },
+                            ),
+                    ),
+                  ),
+                ],
               );
   }
 }

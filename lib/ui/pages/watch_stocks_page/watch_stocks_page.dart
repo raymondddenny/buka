@@ -46,7 +46,7 @@ class WatchStockPage extends StatelessWidget {
       subtitle: Text(watchStock.type),
       trailing: IconButton(
           onPressed: () {
-            watchStockProvider.deleteWatchStock(watchStock);
+            watchStockProvider.deleteWatchStock(context: context, watchStocks: watchStock);
           },
           icon: const Icon(
             Icons.saved_search,
