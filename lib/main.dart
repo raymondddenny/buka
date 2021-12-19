@@ -1,3 +1,4 @@
+import 'package:bukalapak_test/controller/auth_provider.dart';
 import 'package:bukalapak_test/controller/stocks_provider.dart';
 import 'package:bukalapak_test/routes/routes.gr.dart';
 import 'package:bukalapak_test/ui/pages/home_page1.dart';
@@ -7,9 +8,16 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'controller/watch_stock_provider.dart';
+import 'firebase_options.dart';
 import 'model/watch_stock_model.dart';
+import 'routes/auth_guard.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await Hive.initFlutter();
   Hive.registerAdapter(WatchStocksAdapter());
 
@@ -32,6 +40,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<WatchStockProvider>(
           create: (context) => WatchStockProvider(),
         ),
+        ChangeNotifierProvider<AuthProvider>(create: (context) => AuthProvider())
       ],
       child: MaterialApp.router(
         routerDelegate: _appRouter.delegate(),
