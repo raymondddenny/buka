@@ -1,26 +1,41 @@
 import 'package:bukalapak_test/controller/stocks_provider.dart';
-import 'package:bukalapak_test/ui/pages/home.dart';
+import 'package:bukalapak_test/routes/routes.gr.dart';
+import 'package:bukalapak_test/ui/pages/home_page1.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-void main() {
-  runApp(const MyApp());
+import 'controller/watch_stock_provider.dart';
+import 'model/watch_stock_model.dart';
+
+Future main() async {
+  await Hive.initFlutter();
+  Hive.registerAdapter(WatchStocksAdapter());
+
+  await Hive.openBox<WatchStocks>('watch_stocks');
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
+  final _appRouter = AppRouter();
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
+        ChangeNotifierProvider<StockProvider>(
           create: (context) => StockProvider(),
-        )
+        ),
+        ChangeNotifierProvider<WatchStockProvider>(
+          create: (context) => WatchStockProvider(),
+        ),
       ],
-      child: MaterialApp(
-        title: 'Flutter Demo',
+      child: MaterialApp.router(
+        routerDelegate: _appRouter.delegate(),
+        routeInformationParser: _appRouter.defaultRouteParser(),
         theme: ThemeData(
           // This is the theme of your application.
           //
@@ -33,7 +48,6 @@ class MyApp extends StatelessWidget {
           // is not restarted.
           primarySwatch: Colors.blue,
         ),
-        home: const HomePage(),
       ),
     );
   }
