@@ -46,13 +46,14 @@ class HomePage extends StatelessWidget {
         bottomNavigationBuilder: (_, tabsRouter) {
           return SalomonBottomBar(
             currentIndex: tabsRouter.activeIndex,
-            onTap: (index) async {
-              tabsRouter.setActiveIndex(index);
+            onTap: tabsRouter.setActiveIndex,
+            // onTap: (index) async {
+            //   tabsRouter.setActiveIndex(index);
 
-              if (index == 1) {
-                await stockProvider.getStocksSymbol();
-              }
-            },
+            //   if (index == 1) {
+            //     await stockProvider.getStocksSymbol();
+            //   }
+            // },
             items: [
               SalomonBottomBarItem(icon: Icon(Icons.person_pin_rounded), title: Text('Your Profile')),
               SalomonBottomBarItem(icon: Icon(Icons.table_view_rounded), title: Text('Stocks')),

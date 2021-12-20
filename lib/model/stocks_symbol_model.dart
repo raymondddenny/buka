@@ -35,4 +35,14 @@ class StockSymbolModel {
         symbol: json["symbol"],
         type: json["type"],
       );
+
+  Map<String, dynamic> toJson() => {
+        "currency": currency,
+        "description": description,
+        "displaySymbol": displaySymbol,
+        "figi": figi,
+        "mic": mic,
+        "symbol": symbol,
+        "type": type,
+      };
 }

@@ -30,4 +30,24 @@ class WatchStocks extends HiveObject {
     required this.symbol,
     required this.type,
   });
+
+  factory WatchStocks.fromJson(Map<String, dynamic> json) => WatchStocks(
+        currency: json["currency"],
+        description: json["description"],
+        displaySymbol: json["displaySymbol"],
+        figi: json["figi"],
+        mic: json["mic"],
+        symbol: json["symbol"],
+        type: json["type"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "currency": currency,
+        "description": description,
+        "displaySymbol": displaySymbol,
+        "figi": figi,
+        "mic": mic,
+        "symbol": symbol,
+        "type": type,
+      };
 }

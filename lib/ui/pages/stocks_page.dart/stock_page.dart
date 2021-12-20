@@ -73,10 +73,14 @@ class _StockPageState extends State<StockPage> {
                                     subtitle: Text(stockProvider.filteredList[index].type),
                                     trailing: IconButton(
                                         onPressed: () {
-                                          watchStockProvider.addToWatchList(
-                                              stockData: stockProvider.filteredList[index],
+                                          // watchStockProvider.addToWatchList(
+                                          //     stockData: stockProvider.filteredList[index],
+                                          //     index: index,
+                                          //     context: context);
+                                          watchStockProvider.addToWatch(
+                                              context: context,
                                               index: index,
-                                              context: context);
+                                              watchStocks: stockProvider.filteredList[index]);
                                         },
                                         icon: const Icon(Icons.saved_search_rounded)),
                                   );
@@ -87,10 +91,14 @@ class _StockPageState extends State<StockPage> {
                                     subtitle: Text(stockProvider.filteredList[index].type),
                                     trailing: IconButton(
                                         onPressed: () {
-                                          watchStockProvider.addToWatchList(
-                                              stockData: stockProvider.filteredList[index],
+                                          // watchStockProvider.addToWatchList(
+                                          //     stockData: stockProvider.filteredList[index],
+                                          //     index: index,
+                                          //     context: context);
+                                          watchStockProvider.addToWatch(
+                                              context: context,
                                               index: index,
-                                              context: context);
+                                              watchStocks: stockProvider.filteredList[index]);
                                         },
                                         icon: const Icon(Icons.saved_search_rounded)),
                                   );
